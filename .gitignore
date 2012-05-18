@@ -1,0 +1,13 @@
+target
+.idea/workspace.xml
+.idea/highlighting.xml
+.idea/dictionaries/*
+lib_managed
+src_managed
+project/boot
+local-repo
+*.ncb
+*.suo
+*.obj
+EFGPref.ini
+.history
