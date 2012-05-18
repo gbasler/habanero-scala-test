@@ -1,3 +1,5 @@
 *.jar binary
 *.doc binary
 *.xls binary
+*.so binary
+*.dll binary
