@@ -38,7 +38,10 @@ object build extends Build {
   lazy val runPlacesTaskSettings: Seq[Setting[_]] = Seq(
     fullRunTask(runPlacesTask, Test, "Places"),
     fork in runPlacesTask := true,
-    javaOptions in runPlacesTask += "-Dhs.places=4:1"
+    javaOptions in runPlacesTask += "-Dhs.places=4:1",
+    javaOptions in runPlacesTask += "-Dhs.time=true",
+    javaOptions in runPlacesTask += "-Dhs.stats=true",
+    javaOptions in runPlacesTask += "-Dhs.threadBindingDiagnostics=true",
+    unmanagedClasspath in runPlacesTask := Seq(Attributed.blank(file("lib/native/win32_x86")), Attributed.blank(file("lib/native/linux_x86")))
   )
-
 }
