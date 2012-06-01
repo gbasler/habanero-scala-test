@@ -28,9 +28,17 @@ object build extends Build {
   lazy val scalazSbtSandboxCore = Project(
     id = "habanero-scala-test-core",
     base = file("habanero-scala-test-core"),
-    settings = Defaults.defaultSettings ++ standardSettings ++ Seq(
+    settings = Defaults.defaultSettings ++ standardSettings ++ runPlacesTaskSettings ++ Seq(
       libraryDependencies ++= Seq(Specs, SpecsInternalScalaz, JUnit, Scalacheck, MockitoAll, CommonsIo)
     )
+  )
+
+  lazy val runPlacesTask = TaskKey[Unit]("run-places")
+
+  lazy val runPlacesTaskSettings: Seq[Setting[_]] = Seq(
+    fullRunTask(runPlacesTask, Test, "Places"),
+    fork in runPlacesTask := true,
+    javaOptions in runPlacesTask += "-Dhs.places=4:1"
   )
 
 }
