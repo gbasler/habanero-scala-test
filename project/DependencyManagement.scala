@@ -50,4 +50,6 @@ object DependencyManagement {
   def MockitoAll = "org.mockito" % "mockito-all" % "1.8.4" % "test"
 
   def TreeHugger = "com.eed3si9n" % "treehugger_2.9.1" % "0.0.1-SNAPSHOT"
+
+  def HabaneroScala = "edu.rice.habanero" % "habanero-scala" % "0.1.2"
 }
