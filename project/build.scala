@@ -1,3 +1,4 @@
+import java.io.Serializable
 import sbt._
 import Keys._
 import sbt.Reference._
@@ -35,13 +36,28 @@ object build extends Build {
 
   lazy val runPlacesTask = TaskKey[Unit]("run-places")
 
+  lazy val os = SettingKey[String]("os", "This is the targeted OS for the build. Defaults to the running OS.")
+
+  def defineOs = System.getProperty("os.name").toLowerCase.take(3).toString match {
+    case "lin"         => "linux"
+    case "mac" | "dar" => "osx"
+    case "win"         => "windows"
+    case "sun"         => "solaris"
+    case _             => "unknown"
+  }
+
   lazy val runPlacesTaskSettings: Seq[Setting[_]] = Seq(
     fullRunTask(runPlacesTask, Test, "Places"),
     fork in runPlacesTask := true,
+    os := defineOs,
     javaOptions in runPlacesTask += "-Dhs.places=4:1",
     javaOptions in runPlacesTask += "-Dhs.time=true",
     javaOptions in runPlacesTask += "-Dhs.stats=true",
     javaOptions in runPlacesTask += "-Dhs.threadBindingDiagnostics=true",
-    unmanagedClasspath in runPlacesTask := Seq(Attributed.blank(file("lib/native/win32_x86")), Attributed.blank(file("lib/native/linux_x86")))
+    javaOptions <+= (baseDirectory, os) {
+      case (dir, "linux")   => "-Djava.library.path=%s/lib/native/linux_x86".format(dir)
+      case (dir, "windows") => "-Djava.library.path=%s/lib/native/win32_x86".format(dir)
+      case (dir, _)         => ""
+    }
   )
 }
