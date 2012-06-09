@@ -1,7 +1,7 @@
-import primers.places.PlacePrimer
+import primers.actors.Pi
 
 object Places {
   def main(args: Array[String]) {
-    PlacePrimer.main(args)
+    Pi.main(args)
   }
 }
