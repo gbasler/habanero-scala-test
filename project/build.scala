@@ -54,7 +54,7 @@ object build extends Build {
     javaOptions in runPlacesTask += "-Dhs.time=true",
     javaOptions in runPlacesTask += "-Dhs.stats=true",
     javaOptions in runPlacesTask += "-Dhs.threadBindingDiagnostics=true",
-    javaOptions <+= (baseDirectory, os) {
+    javaOptions in runPlacesTask <+= (baseDirectory, os) {
       case (dir, "linux")   => "-Djava.library.path=%s/lib/native/linux_x86".format(dir)
       case (dir, "windows") => "-Djava.library.path=%s/lib/native/win32_x86".format(dir)
       case (dir, _)         => ""
